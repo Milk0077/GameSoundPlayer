@@ -1,4 +1,4 @@
-# Yiqth 音效器
+﻿# Yiqth 音效器
 
 Windows 桌面音效板：把真实麦克风、音效和音乐实时混音，通过 WASAPI 输出到已安装的 Voicemeeter。游戏、Discord、OBS 等软件使用 Voicemeeter Out B1 接收混音。
 

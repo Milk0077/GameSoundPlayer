@@ -1,4 +1,4 @@
-<Application x:Class="GameSoundboard.App.App"
+﻿<Application x:Class="GameSoundboard.App.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GameSoundboard.App"
