@@ -1,0 +1,11 @@
+.dotnet/
+.tools/
+.packages/
+.appdata/
+.localappdata/
+**/bin/
+**/obj/
+.vs/
+dist/
+*.user
+*.suo

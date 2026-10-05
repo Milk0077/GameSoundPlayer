@@ -1,0 +1,268 @@
+<Window x:Class="GameSoundboard.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Yiqth 音效器" Icon="Assets/YiqthIcon.png" Height="650" Width="1120" MinHeight="520" MinWidth="900"
+        Background="#111827" Foreground="#F9FAFB" FontSize="13">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#374151" />
+            <Setter Property="Foreground" Value="#F9FAFB" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="12,7" />
+            <Setter Property="Margin" Value="0,0,8,0" />
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="#111827" />
+            <Setter Property="Foreground" Value="#F9FAFB" />
+            <Setter Property="BorderBrush" Value="#4B5563" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#1E3A5F" />
+            <Setter Property="Foreground" Value="#F9FAFB" />
+            <Setter Property="BorderBrush" Value="#3B82F6" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="9,5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Border x:Name="ComboBorder" Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="30" />
+                                    </Grid.ColumnDefinitions>
+                                    <ContentPresenter Grid.Column="0" Margin="{TemplateBinding Padding}"
+                                                      VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                      RecognizesAccessKey="True" IsHitTestVisible="False"
+                                                      Content="{TemplateBinding SelectionBoxItem}"
+                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                      TextElement.Foreground="{TemplateBinding Foreground}" />
+                                    <Path Grid.Column="1" Data="M 0 0 L 5 5 L 10 0" Stroke="#FFFFFF"
+                                          StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                            <ToggleButton Focusable="False" Background="Transparent" BorderThickness="0"
+                                          IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="Transparent" />
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <Popup x:Name="PART_Popup" Placement="Bottom" AllowsTransparency="True"
+                                   PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}" StaysOpen="False">
+                                <Border Background="#1E3A5F" BorderBrush="#3B82F6" BorderThickness="1"
+                                        MinWidth="{Binding PlacementTarget.ActualWidth, ElementName=PART_Popup}">
+                                    <ScrollViewer MaxHeight="320" VerticalScrollBarVisibility="Auto"
+                                                  CanContentScroll="True">
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ComboBorder" Property="BorderBrush" Value="#60A5FA" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ComboBorder" Property="Opacity" Value="0.55" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="#1E3A5F" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="Padding" Value="9,6" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder" Background="{TemplateBinding Background}"
+                                TextElement.Foreground="{TemplateBinding Foreground}">
+                            <ContentPresenter ContentSource="Content" Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#2563EB" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#1D4ED8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter Property="Background" Value="#2563EB" />
+                    <Setter Property="Foreground" Value="#FFFFFF" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#1D4ED8" />
+                    <Setter Property="Foreground" Value="#FFFFFF" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#F9FAFB" />
+        </Style>
+    </Window.Resources>
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Yiqth 音效器" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,20" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="290" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="#1F2937" CornerRadius="10" Padding="18" Margin="0,0,12,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+                    <TextBlock Text="Soundboard" FontSize="19" FontWeight="SemiBold" Margin="0,0,0,20" />
+                    <Button Content="添加音效" Click="AddSounds_Click" Margin="0,0,0,8" />
+                    <Button Content="Stop All" Click="StopAllSounds_Click" Margin="0,0,0,8" />
+                    <TextBlock Text="本地混音验证" FontSize="15" FontWeight="SemiBold" Margin="0,14,0,8" />
+                    <Button Content="录制 WAV" Click="StartRecording_Click" Margin="0,0,0,8" />
+                    <Button Content="停止录制" Click="StopRecording_Click" Margin="0,0,0,8" />
+                    <TextBlock Text="{Binding RecordingStatus}" Foreground="#9CA3AF" TextWrapping="Wrap" />
+                    <TextBlock Text="Music" FontSize="19" FontWeight="SemiBold" Margin="0,30,0,8" />
+                    <Button Content="添加音乐" Click="AddMusic_Click" Margin="0,0,0,8" />
+                    <Button Content="移除选中音乐" Click="RemoveMusic_Click" Margin="0,0,0,8" />
+                    <ListBox ItemsSource="{Binding MusicTracks}" DisplayMemberPath="Name"
+                             SelectedIndex="{Binding SelectedMusicIndex, Mode=TwoWay}"
+                             MouseDoubleClick="MusicList_DoubleClick" Height="100" />
+                    <WrapPanel Margin="0,10,0,0">
+                        <Button Content="上一首" Click="PreviousMusic_Click" />
+                        <Button Content="播放" Click="PlayMusic_Click" />
+                        <Button Content="暂停" Click="PauseMusic_Click" />
+                        <Button Content="停止" Click="StopMusic_Click" />
+                        <Button Content="下一首" Click="NextMusic_Click" />
+                    </WrapPanel>
+                    <TextBlock Text="{Binding MusicStatus}" TextWrapping="Wrap" Foreground="#9CA3AF" Margin="0,12,0,0" />
+                    <Slider x:Name="MusicSeekSlider" Minimum="0" Maximum="100" Value="{Binding MusicPositionPercent, Mode=OneWay}"
+                            PreviewMouseLeftButtonUp="MusicSeekSlider_MouseUp" />
+                    <TextBlock Text="{Binding MusicTime}" Foreground="#9CA3AF" FontSize="11" />
+                    <ComboBox x:Name="MusicLoopBox" SelectedIndex="0" SelectionChanged="MusicLoopBox_SelectionChanged" Margin="0,10,0,0">
+                        <ComboBoxItem Content="循环：关闭" />
+                        <ComboBoxItem Content="循环：单曲" />
+                        <ComboBoxItem Content="循环：列表" />
+                    </ComboBox>
+                </StackPanel></ScrollViewer>
+            </Border>
+            <Border Grid.Column="1" Background="#1F2937" CornerRadius="10" Padding="18" Margin="0,0,12,0">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+                        <TextBlock Text="音效" FontSize="19" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding SoundboardStatus}" Foreground="#9CA3AF" TextWrapping="Wrap" Margin="0,5,0,0" />
+                        <TextBlock Text="点击左侧“添加音效”，可同时播放多张卡片。" Foreground="#6B7280" FontSize="11" Margin="0,8,0,0" />
+                    </StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Sounds}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="200" Background="#273449" CornerRadius="8" Margin="0,0,10,10" Padding="12">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+                                            <TextBlock Text="{Binding Duration}" Foreground="#9CA3AF" FontSize="11" Margin="0,4,0,10" />
+                                            <WrapPanel>
+                                                <Button Content="播放" Tag="{Binding Id}" Click="PlaySound_Click" />
+                                                <Button Content="停止" Tag="{Binding Id}" Click="StopSound_Click" />
+                                                <Button Content="编辑" Tag="{Binding Id}" Click="EditSound_Click" />
+                                                <Button Content="快捷键" Tag="{Binding Id}" Click="Hotkey_Click" />
+                                                <Button Content="删除" Tag="{Binding Id}" Click="RemoveSound_Click" />
+                                            </WrapPanel>
+                                            <TextBlock Text="{Binding Hotkey}" Foreground="#93C5FD" FontSize="11" Margin="0,5,0,0" />
+                                            <TextBlock Text="音量" Foreground="#9CA3AF" FontSize="11" Margin="0,10,0,0" />
+                                            <Slider Minimum="0" Maximum="2" Value="{Binding Volume, Mode=OneWay}" Tag="{Binding Id}" ValueChanged="SoundVolume_ValueChanged" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="2" Background="#1F2937" CornerRadius="10" Padding="18">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+                    <TextBlock Text="Audio Mixer" FontSize="19" FontWeight="SemiBold" Margin="0,0,0,18" />
+                    <TextBlock Text="真实麦克风" FontWeight="SemiBold" />
+                    <ComboBox MinHeight="34" Margin="0,8,0,8" ItemsSource="{Binding InputDevices}"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding SelectedDeviceId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DisplayName}" Foreground="#FFFFFF" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Content="刷新设备" Click="RefreshDevices_Click" HorizontalAlignment="Left" />
+                    <TextBlock Text="混音输出到（选 Voicemeeter Input）" FontWeight="SemiBold" Margin="0,16,0,5" />
+                    <ComboBox MinHeight="34" ItemsSource="{Binding OutputDevices}"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding SelectedOutputDeviceId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Foreground="#FFFFFF" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Text="在 Voicemeeter 的该输入通道打开 B1；游戏麦克风选择 Voicemeeter Output。"
+                               Foreground="#9CA3AF" TextWrapping="Wrap" Margin="0,5,0,0" />
+                    <TextBlock Text="{Binding InputStatus}" TextWrapping="Wrap" Margin="0,15,0,4" />
+                    <ProgressBar Minimum="0" Maximum="100" Height="12" Value="{Binding MicMeterPercent, Mode=OneWay}" />
+                    <TextBlock Text="{Binding MicPeakText}" Foreground="#9CA3AF" FontSize="12" Margin="0,5,0,0" />
+                    <CheckBox x:Name="MicMonitorBox" Content="Mic Monitor（播放到默认扬声器）"
+                              Checked="MicMonitorBox_Changed" Unchecked="MicMonitorBox_Changed"
+                              Margin="0,12,0,0" />
+                    <TextBlock Text="{Binding DeviceSummary}" Foreground="#9CA3AF" Margin="0,14,0,0" />
+                    <TextBlock Text="Audio Buffer Size" FontWeight="SemiBold" Margin="0,18,0,5" />
+                    <ComboBox x:Name="AudioBufferBox" SelectedIndex="1" SelectionChanged="AudioBufferBox_SelectionChanged">
+                        <ComboBoxItem Content="5 ms" />
+                        <ComboBoxItem Content="10 ms" />
+                        <ComboBoxItem Content="20 ms" />
+                        <ComboBoxItem Content="40 ms" />
+                    </ComboBox>
+                    <ItemsControl ItemsSource="{Binding MixerBuses}" Margin="0,16,0,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,16">
+                                    <DockPanel>
+                                        <CheckBox Content="Mute" IsChecked="{Binding IsMuted, Mode=TwoWay}" DockPanel.Dock="Right" />
+                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                                    </DockPanel>
+                                    <Slider Minimum="0" Maximum="2" Value="{Binding Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,6,0,5" />
+                                    <ProgressBar Minimum="0" Maximum="100" Height="8" Value="{Binding PeakPercent, Mode=OneWay}" />
+                                    <TextBlock Text="{Binding PeakText}" FontSize="11" Foreground="#9CA3AF" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="Voicemeeter 输出状态见底栏" Foreground="#FBBF24" Margin="0,12,0,0" />
+                    <TextBlock Text="Diagnostics" FontWeight="SemiBold" Margin="0,24,0,8" />
+                    <TextBlock Text="{Binding DiagnosticsText}" Foreground="#9CA3AF" FontSize="11" TextWrapping="Wrap" />
+                </StackPanel></ScrollViewer>
+            </Border>
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,14,0,0">
+            <TextBlock Text="{Binding OutputStatus}" Foreground="#9CA3AF" />
+            <TextBlock Text="  •  " Foreground="#9CA3AF" />
+            <TextBlock Text="{Binding EngineStatus}" Foreground="#9CA3AF" />
+        </StackPanel>
+    </Grid>
+</Window>

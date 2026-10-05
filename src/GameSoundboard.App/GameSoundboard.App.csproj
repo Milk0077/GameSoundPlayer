@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\GameSoundboard.Core\GameSoundboard.Core.csproj" />
+    <ProjectReference Include="..\GameSoundboard.Audio\GameSoundboard.Audio.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>Yiqth 音效器</AssemblyName>
+    <Product>Yiqth 音效器</Product>
+    <Title>Yiqth 音效器</Title>
+    <ApplicationIcon>Assets\YiqthIcon.ico</ApplicationIcon>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\YiqthIcon.png" />
+  </ItemGroup>
+
+</Project>
